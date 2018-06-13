@@ -4,7 +4,9 @@ public class Logger {
     static int sum = 0;
     public static void log(int message) {
         sum += message;
-        //System.out.println("primitive: " + sum);
+       // System.out.println("primitive: " + sum);
+        if (message == 0)
+            System.out.println("primitive: " + message);
     }
 
     public static void log(byte message) {

@@ -15,6 +15,7 @@ public class Logger {
             output("primitive: " + Integer.MAX_VALUE);
             return;
         }
+        //put here flushstring
         integerSum += message;
     }
 

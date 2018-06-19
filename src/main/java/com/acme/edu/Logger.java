@@ -1,19 +1,25 @@
 package com.acme.edu;
 
 public class Logger {
-    private static int integerSum = 0;
-
-    public static void logIntBuffer(){
+    private static long integerSum = 0;
+    private static int stringCounter = 1;
+    private static String prevState = new String("");
+    public static void flushIntBuffer(){
         output("primitive: " + integerSum);
         integerSum = 0;
     }
 
     public static void log(int message) {
+        if ((integerSum + message) >= Integer.MAX_VALUE) {
+            flushIntBuffer();
+            output("primitive: " + Integer.MAX_VALUE);
+            return;
+        }
         integerSum += message;
     }
 
     public static void log(byte message) {
-        logIntBuffer();
+        flushIntBuffer();
         String decoratedMessage = "primitive: " + message;
         output(decoratedMessage);
     }
@@ -23,25 +29,44 @@ public class Logger {
     }
 
     public static void log (char message) {
-        logIntBuffer();
+        flushIntBuffer();
         output("char: " + message);
     }
 
     public static void log (String message) {
-        logIntBuffer();
-        output("string: " + message);
+        flushIntBuffer();
+        if (!message.equals(prevState)){
+            flushStringBuffer(message);
+        }else {
+            stringCounter++;
+            System.out.println("stringCounter:" + stringCounter);
+        }
+
+    }
+
+    public static void flushStringBuffer(String message) {
+        if(stringCounter==1) {
+            output("string: " + message);
+            prevState = message;
+        }else {
+            output("string: " + message + "(x"+stringCounter+")");
+            prevState = message;
+            stringCounter = 1;
+        }
     }
 
     public static void log (boolean message) {
-        logIntBuffer();
+        flushIntBuffer();
         output("primitive: " + message);
     }
 
     public static void log (Object message) {
-        logIntBuffer();
+        flushIntBuffer();
         output("reference: " + "@");
     }
 
 
+    public static void flush() {
 
+    }
 }

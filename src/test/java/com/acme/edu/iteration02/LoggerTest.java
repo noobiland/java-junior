@@ -93,7 +93,7 @@ public class LoggerTest implements SysoutCaptureAndAssertionAbility {
         Logger.log("str 3");
         Logger.log("str 3");
         Logger.log("str 3");
-        Logger.flush();
+        Logger.flushStringBuffer();
         //endregion
 
         //region then

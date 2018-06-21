@@ -1,11 +1,15 @@
 package com.acme.edu;
 
 public class Logger {
+    private static boolean intAccum = false;
+    private static boolean stringAccum = false;
     private static long integerSum = 0;
     private static int stringCounter = 1;
     private static String prevState = null;
-    private static boolean intAccum = false;
-    public static boolean stringAccum = false;
+
+    private static void output(String decoratedMessage) {
+        System.out.println(decoratedMessage);
+    }
 
     public static void flushIntBuffer(){
         if (intAccum) {
@@ -77,8 +81,37 @@ public class Logger {
         output("reference: " + "@");
     }
 
-    private static void output(String decoratedMessage) {
-        System.out.println(decoratedMessage);
+    public static void log (int[] message){
+        StringBuilder decoratedArrayMessage = new StringBuilder("primitives array: ");
+        arrayOutput(message, decoratedArrayMessage);
+    }
+
+    private static void arrayOutput(int[] message, StringBuilder decoratedArrayMessage) {
+        decoratedArrayMessage.append("{");
+
+        for(int i=0; i<(message.length - 1); i++){
+            decoratedArrayMessage.append(message[i]).append(", ");
+        }
+
+        decoratedArrayMessage.append(message[message.length-1]).append("}");
+        System.out.println(decoratedArrayMessage);
+    }
+
+    public static void log (int[][] message){
+        System.out.println(message.length);
+        //StringBuilder decoratedMatrixMessage = new StringBuilder("primitives matrix: {"+ System.lineSeparator());
+
+       /* for(int[] innerArray: message){
+            for (int data: innerArray){
+                System.out.println(data);
+            }
+        }*/
+            //arrayOutput(message[i], decoratedMatrixMessage);
+            //decoratedMatrixMessage.append(System.lineSeparator());
+
+
+        //decoratedMatrixMessage.append("}");
+        //System.out.println(decoratedMatrixMessage);
     }
 }
 

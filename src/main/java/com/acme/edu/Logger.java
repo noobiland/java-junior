@@ -82,6 +82,7 @@ public class Logger {
     public static void log(int[] message) {
         StringBuilder decoratedArrayMessage = new StringBuilder("primitives array: ");
         arrayOutput(message, decoratedArrayMessage);
+        System.out.println(decoratedArrayMessage);
     }
 
     private static void arrayOutput(int[] message, StringBuilder decoratedArrayMessage) {
@@ -92,16 +93,16 @@ public class Logger {
         }
 
         decoratedArrayMessage.append(message[message.length - 1]).append("}");
-        System.out.println(decoratedArrayMessage);
     }
 
     public static void log(int[][] message) {
         StringBuilder decoratedMatrixMessage = new StringBuilder("primitives matrix: {" + System.lineSeparator());
-
+        StringBuilder arrayLine = new StringBuilder();
         for (int[] innerArray : message) {
-            arrayOutput(innerArray, decoratedMatrixMessage);
-            decoratedMatrixMessage.append(System.lineSeparator());
-            }
+            arrayOutput(innerArray, arrayLine);
+            decoratedMatrixMessage.append(arrayLine).append(System.lineSeparator());
+            arrayLine.setLength(0);
+        }
 
         decoratedMatrixMessage.append("}");
         System.out.println(decoratedMatrixMessage);

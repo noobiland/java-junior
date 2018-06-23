@@ -11,6 +11,10 @@ public class Logger {
         System.out.println(decoratedMessage);
     }
 
+    private static void output(StringBuilder decoratedMessage) {
+        System.out.println(decoratedMessage);
+    }
+
     public static void flushIntBuffer() {
         if (intAccum) {
             output("primitive: " + integerSum);
@@ -81,34 +85,76 @@ public class Logger {
 
     public static void log(int[] message) {
         StringBuilder decoratedArrayMessage = new StringBuilder("primitives array: ");
-        arrayAssemle(message, decoratedArrayMessage);
-        System.out.println(decoratedArrayMessage);
+        decoratedArrayMessage.append("{");
+        arrayAssemble(message, decoratedArrayMessage);
+        decoratedArrayMessage.append("}");
+        output(decoratedArrayMessage);
     }
 
-    private static void arrayAssemle(int[] message, StringBuilder decoratedArrayMessage) {
-        decoratedArrayMessage.append("{");
-
+    private static void arrayAssemble(int[] message, StringBuilder decoratedArrayMessage) {
         for (int i = 0; i < (message.length - 1); i++) {
             decoratedArrayMessage.append(message[i]).append(", ");
         }
-
-        decoratedArrayMessage.append(message[message.length - 1]).append("}");
+        decoratedArrayMessage.append(message[message.length - 1]);
     }
 
     public static void log(int[][] message) {
         StringBuilder decoratedMatrixMessage = new StringBuilder("primitives matrix: {" + System.lineSeparator());
-        StringBuilder arrayLine = new StringBuilder();
-        for (int[] innerArray : message) {
-            arrayAssemle(innerArray, arrayLine);
-            decoratedMatrixMessage.append(arrayLine).append(System.lineSeparator());
-            arrayLine.setLength(0);
-        }
-
+        matrixAssemble(message, decoratedMatrixMessage);
         decoratedMatrixMessage.append("}");
-        System.out.println(decoratedMatrixMessage);
-
+        output(decoratedMatrixMessage);
     }
 
+    private static void matrixAssemble(int[][] message, StringBuilder decoratedMatrixMessage) {
+        StringBuilder arrayLine = new StringBuilder();
+
+        for (int[] innerArray : message) {
+            decoratedMatrixMessage.append("{");
+            arrayAssemble(innerArray, arrayLine);
+            decoratedMatrixMessage.append(arrayLine).append("}").append(System.lineSeparator());
+            arrayLine.setLength(0);
+        }
+    }
+
+    public static void log(int[][][][] message) {
+        StringBuilder decoratedMultiMatrixMessage = new StringBuilder("primitives multimatrix: {" + System.lineSeparator());
+        StringBuilder arrayLine = new StringBuilder();
+
+        for(int i = 0; i < message.length; i++){
+            decoratedMultiMatrixMessage.append("{").append(System.lineSeparator());
+            for(int j = 0; j < message[i].length; j++){
+                decoratedMultiMatrixMessage.append("{").append(System.lineSeparator());
+                for (int k = 0; k < message[i][j].length; k++){
+                    decoratedMultiMatrixMessage.append("{").append(System.lineSeparator());
+                    arrayAssemble(message[i][j][k],arrayLine);
+                    decoratedMultiMatrixMessage.append(arrayLine).append(System.lineSeparator()).append("}").append(System.lineSeparator());
+                }
+                decoratedMultiMatrixMessage.append("}").append(System.lineSeparator());
+            }
+            decoratedMultiMatrixMessage.append("}").append(System.lineSeparator());
+        }
+        decoratedMultiMatrixMessage.append("}");
+        output(decoratedMultiMatrixMessage);
+    }
+
+    public static void log(String... message) {
+        StringBuilder decoratedString = new StringBuilder();
+        for (String row:
+             message) {
+            decoratedString.append(row).append(System.lineSeparator());
+        }
+        output(decoratedString);
+    }
+
+    public static void log(int message1, int... message2) {
+        StringBuilder decoratedInt = new StringBuilder();
+        decoratedInt.append(message1);
+        for (int num :
+                message2) {
+            decoratedInt.append(num).append(System.lineSeparator());
+        }
+        output(decoratedInt);
+    }
 }
 
 

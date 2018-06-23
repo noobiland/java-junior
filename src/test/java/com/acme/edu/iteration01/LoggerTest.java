@@ -109,7 +109,7 @@ public class LoggerTest implements SysoutCaptureAndAssertionAbility {
         assertSysoutContains("reference: ");
         assertSysoutContains("@");
         //endregion
-    }
 
+    }
 
 }

@@ -1,4 +1,4 @@
-package demo;
+package demo.procedure;
 
 public class ControllingDemo {
     public static void main(String... args) {
@@ -96,5 +96,8 @@ public class ControllingDemo {
         for (int element : arg1) {
             System.out.println(element);
         }
+
     }
+
+
 }
